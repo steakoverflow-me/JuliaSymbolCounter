@@ -78,9 +78,10 @@ for repo in repos
     @info "Loading repository $repo"
     dir = "./code-$(replace(repo, "/" => "_"))"
     try
-        run(`git clone $repo $dir`)
+        run(`git clone --progress $repo $dir`)
         parse_dir(dir, repo_num)
     catch exc
+        @warn exc
         push!(excs, exc)
     finally
         rm(dir; force=true, recursive=true)
@@ -88,10 +89,10 @@ for repo in repos
 end
 
 @info "Parsing finished! Dictionary length is $(length(dict))"
+print("\n\n\n")
 
 for exc in excs
-    error(exc)
-    @warn exc
+    @error exc
 end
 
 print("\n\n\n")
