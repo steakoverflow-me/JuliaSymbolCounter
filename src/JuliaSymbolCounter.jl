@@ -4,6 +4,8 @@ import MacroTools
 import DataStructures: OrderedDict
 import TOML
 
+ENV["GIT_TERMINAL_PROMPT"] = 0
+
 dict = OrderedDict{String, Int}()
 
 dict_lock = ReentrantLock()
@@ -76,7 +78,7 @@ for repo in repos
     @info "Loading repository $repo"
     dir = "./code-$(replace(repo, "/" => "_"))"
     try
-        run(`GIT_TERMINAL_PROMPT=0 git clone $repo $dir`)
+        run(`git clone $repo $dir`)
         parse_dir(dir, repo_num)
     catch exc
         push!(excs, exc)
