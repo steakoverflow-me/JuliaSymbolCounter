@@ -60,7 +60,7 @@ function parse_dir(dir, repo_num)
     @Threads.threads for file in files
         lock(num_lock) do
             num = num + 1
-            @info "[$(length(excs)) : $(lpad(repo_num, REPOS_STR_LEN, " "))/$REPOS_NUM) : $(lpad(num, str_len, " "))/$files_num]\tParsing $file"
+            @info "[$(length(excs)) : $(lpad(repo_num, REPOS_STR_LEN, " "))/$REPOS_NUM : $(lpad(num, str_len, " "))/$files_num]\tParsing $file"
         end
 
         content = read(file, String) |> strip
