@@ -3,7 +3,6 @@ module JuliaSymbolCounter
 import MacroTools
 import DataStructures: OrderedDict
 import TOML
-import LibGit2
 
 ENV["GIT_TERMINAL_PROMPT"] = 0
 
@@ -79,7 +78,7 @@ for repo in repos
     @info "Loading repository $repo"
     dir = "./code-$(replace(repo, "/" => "_"))"
     try
-        LibGit2.clone(repo, dir)
+        run(`git clone $repo $dir`)
         parse_dir(dir, repo_num)
     catch exc
         push!(excs, exc)
